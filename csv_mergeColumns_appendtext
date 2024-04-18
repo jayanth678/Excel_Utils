@@ -1,0 +1,25 @@
+import pandas as pd
+import datetime
+
+#append text of column to another column for each row
+filePath = "/Users/jayanth/InflexionAnalytics/PowerBI_Scheduler_Apr2024/"
+fileName = "Defects_FirstRound_Apr16 - Sheet1"
+extn = ".csv"
+
+def appendRows():
+    now = datetime.datetime.now()
+    file1 = pd.read_csv (filePath + fileName + extn)
+    #iterate through each row and append the text of column 1 to column 2
+    for index, row in file1.iterrows():
+        row['Detailed Steps'] = "\nSteps\n" + row['Detailed Steps'] + "\nActual Result\n" + row['Actual result'] + "\nExpected Result\n" + row['Expected Result']
+        print(row['Detailed Steps'])
+    file1.to_csv(filePath + fileName + now.strftime("%Y-%m-%d %H:%M:%S") + extn, index=False)
+    print("File has been saved as " + fileName + now.strftime("%Y-%m-%d %H:%M:%S") + extn)
+
+def main():
+    appendRows()
+
+if __name__ == '__main__':
+    print("This is the main function")
+    main()
+
